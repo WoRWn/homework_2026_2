@@ -80,4 +80,64 @@ QUnit.module("Тестируем функцию deepMerge", function() {
         const result = deepMerge(source, target);
         assert.deepEqual(result, expected, "Должно возвращать исходный объект при отсутствии второго");
     });
+
+QUnit.test("Работает с глубокой вложенностью", function(assert) {
+    const source = {
+        a: {
+            b: {
+                c: {
+                    d: 1,
+                    e: 2
+                }
+            }
+        }
+    };
+
+    const target = {
+        a: {
+            b: {
+                c: {
+                    e: 3,
+                    f: 4
+                }
+            }
+        }
+    };
+
+    const expected = {
+        a: {
+            b: {
+                c: {
+                    d: 1,
+                    e: 3,
+                    f: 4
+                }
+            }
+        }
+    };
+
+    const result = deepMerge(source, target);
+    assert.deepEqual(result, expected, "Должно рекурсивно объединять объекты на любой глубине");
+});
+
+    QUnit.test("Перезаписывает значение возраста age из target", function(assert) {
+        const source = {
+            name: "Алиса",
+            age: 25,
+            city: "Wonderland"
+        };
+
+        const target = {
+            age: 30
+        };
+
+        const expected = {
+            name: "Алиса",
+            age: 30,
+            city: "Wonderland"
+        };
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Возраст age из target должен перезаписать значение из source");
+    });
 });
