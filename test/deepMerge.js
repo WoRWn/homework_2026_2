@@ -140,4 +140,19 @@ QUnit.test("Работает с глубокой вложенностью", func
         const result = deepMerge(source, target);
         assert.deepEqual(result, expected, "Возраст age из target должен перезаписать значение из source");
     });
+
+    QUnit.test("Корректно обрабатывает Map на входе", function(assert) {
+        const source = new Map();
+
+        const target = {
+            a: 1
+        };
+
+        const expected = {
+            a: 1
+        };
+
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Map в source должен трактоваться как пустой объект");
+    });
 });

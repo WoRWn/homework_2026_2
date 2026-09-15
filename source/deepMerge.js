@@ -2,7 +2,7 @@
 
 /**
  * Проверяет, является ли значение объектом, который подходит для рекурсивного 
- * объединения (не массив, не null и не примитив).
+ * объединения (не null и не примитив и не встроенный тип/пользовательский класс).
  *
  * @param {*} value - проверяемое значение
  * @returns {boolean} `true`, если value - объект
@@ -17,9 +17,20 @@
  * 
  * @example
  * // returns false
- * isValueObject(42);        
+ * isValueObject(42);
+ * 
+ * @example 
+ *  // returns false
+ * isValueObject(new Map())        
  */
-const isValueObject = (value) => (value !== null && typeof value === 'object' && !Array.isArray(value));
+const isValueObject = (value) => {
+    if (value === null || typeof value !== 'object') {
+        return false;
+    }
+    
+    const proto = Object.getPrototypeOf(value);
+    return proto === Object.prototype || proto === null;
+}
 
 /**
  * Функция, которая глубоко объединяется два объекта в один.
