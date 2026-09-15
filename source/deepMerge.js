@@ -54,7 +54,7 @@ const deepMerge = (source, target) => {
         (merged, [key, targetValue]) => {
             const sourceValue = safeSource[key];
 
-            merged[key] = isValueObject(source) && isValueObject(targetValue) 
+            merged[key] = isValueObject(sourceValue) && isValueObject(targetValue) 
                 ? deepMerge(sourceValue, targetValue) 
                 : targetValue;
             return merged;
